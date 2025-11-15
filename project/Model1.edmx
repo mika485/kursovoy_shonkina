@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище user152_dbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CLIENTS">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="discount" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="post" Type="int" Nullable="false" />
+          <Property Name="qualification" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="POST">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="post" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QUALIFICATION">
+          <Key>
+            <PropertyRef Name="qualification_id" />
+          </Key>
+          <Property Name="qualification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qualification" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REGISTRATION">
+          <Key>
+            <PropertyRef Name="registration_id" />
+          </Key>
+          <Property Name="registration_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="services_id" Type="int" Nullable="false" />
+          <Property Name="registration_date" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SERVICES">
+          <Key>
+            <PropertyRef Name="services_id" />
+          </Key>
+          <Property Name="services_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="services_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="time" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="STATUS">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="color" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EMPLOYEES_POST">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POST">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_QUALIFICATION">
+          <End Role="QUALIFICATION" Type="Self.QUALIFICATION" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUALIFICATION">
+              <PropertyRef Name="qualification_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="qualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_CLIENTS">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_SERVICES">
+          <End Role="SERVICES" Type="Self.SERVICES" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICES">
+              <PropertyRef Name="services_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="services_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_STATUS">
+          <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERS_ROL">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище user152_dbModelContainer">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POST" EntityType="Self.POST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QUALIFICATION" EntityType="Self.QUALIFICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REGISTRATION" EntityType="Self.REGISTRATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SERVICES" EntityType="Self.SERVICES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EMPLOYEES_POST" Association="Self.FK_EMPLOYEES_POST">
+            <End Role="POST" EntitySet="POST" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_QUALIFICATION" Association="Self.FK_EMPLOYEES_QUALIFICATION">
+            <End Role="QUALIFICATION" EntitySet="QUALIFICATION" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_CLIENTS" Association="Self.FK_REGISTRATION_CLIENTS">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_EMPLOYEES" Association="Self.FK_REGISTRATION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_SERVICES" Association="Self.FK_REGISTRATION_SERVICES">
+            <End Role="SERVICES" EntitySet="SERVICES" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_STATUS" Association="Self.FK_REGISTRATION_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERS_ROL" Association="Self.FK_USERS_ROL">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="user152_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLIENTS">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="discount" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REGISTRATION" Relationship="Self.FK_REGISTRATION_CLIENTS" FromRole="CLIENTS" ToRole="REGISTRATION" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="post" Type="Int32" Nullable="false" />
+          <Property Name="qualification" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="POST1" Relationship="Self.FK_EMPLOYEES_POST" FromRole="EMPLOYEES" ToRole="POST" />
+          <NavigationProperty Name="QUALIFICATION1" Relationship="Self.FK_EMPLOYEES_QUALIFICATION" FromRole="EMPLOYEES" ToRole="QUALIFICATION" />
+          <NavigationProperty Name="REGISTRATION" Relationship="Self.FK_REGISTRATION_EMPLOYEES" FromRole="EMPLOYEES" ToRole="REGISTRATION" />
+        </EntityType>
+        <EntityType Name="POST">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="post1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEES_POST" FromRole="POST" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="QUALIFICATION">
+          <Key>
+            <PropertyRef Name="qualification_id" />
+          </Key>
+          <Property Name="qualification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qualification1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEES_QUALIFICATION" FromRole="QUALIFICATION" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="REGISTRATION">
+          <Key>
+            <PropertyRef Name="registration_id" />
+          </Key>
+          <Property Name="registration_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="services_id" Type="Int32" Nullable="false" />
+          <Property Name="registration_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENTS" Relationship="Self.FK_REGISTRATION_CLIENTS" FromRole="REGISTRATION" ToRole="CLIENTS" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_REGISTRATION_EMPLOYEES" FromRole="REGISTRATION" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="SERVICES" Relationship="Self.FK_REGISTRATION_SERVICES" FromRole="REGISTRATION" ToRole="SERVICES" />
+          <NavigationProperty Name="STATUS1" Relationship="Self.FK_REGISTRATION_STATUS" FromRole="REGISTRATION" ToRole="STATUS" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK_USERS_ROL" FromRole="ROL" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="SERVICES">
+          <Key>
+            <PropertyRef Name="services_id" />
+          </Key>
+          <Property Name="services_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="services_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REGISTRATION" Relationship="Self.FK_REGISTRATION_SERVICES" FromRole="SERVICES" ToRole="REGISTRATION" />
+        </EntityType>
+        <EntityType Name="STATUS">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="REGISTRATION" Relationship="Self.FK_REGISTRATION_STATUS" FromRole="STATUS" ToRole="REGISTRATION" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK_USERS_ROL" FromRole="USERS" ToRole="ROL" />
+        </EntityType>
+        <Association Name="FK_REGISTRATION_CLIENTS">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_POST">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POST">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_QUALIFICATION">
+          <End Role="QUALIFICATION" Type="Self.QUALIFICATION" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUALIFICATION">
+              <PropertyRef Name="qualification_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="qualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_SERVICES">
+          <End Role="SERVICES" Type="Self.SERVICES" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICES">
+              <PropertyRef Name="services_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="services_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REGISTRATION_STATUS">
+          <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+          <End Role="REGISTRATION" Type="Self.REGISTRATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="REGISTRATION">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERS_ROL">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="user152_dbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
+          <EntitySet Name="POST" EntityType="Self.POST" />
+          <EntitySet Name="QUALIFICATION" EntityType="Self.QUALIFICATION" />
+          <EntitySet Name="REGISTRATION" EntityType="Self.REGISTRATION" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" />
+          <EntitySet Name="SERVICES" EntityType="Self.SERVICES" />
+          <EntitySet Name="STATUS" EntityType="Self.STATUS" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" />
+          <AssociationSet Name="FK_REGISTRATION_CLIENTS" Association="Self.FK_REGISTRATION_CLIENTS">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_POST" Association="Self.FK_EMPLOYEES_POST">
+            <End Role="POST" EntitySet="POST" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_QUALIFICATION" Association="Self.FK_EMPLOYEES_QUALIFICATION">
+            <End Role="QUALIFICATION" EntitySet="QUALIFICATION" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_EMPLOYEES" Association="Self.FK_REGISTRATION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_SERVICES" Association="Self.FK_REGISTRATION_SERVICES">
+            <End Role="SERVICES" EntitySet="SERVICES" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRATION_STATUS" Association="Self.FK_REGISTRATION_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
+            <End Role="REGISTRATION" EntitySet="REGISTRATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERS_ROL" Association="Self.FK_USERS_ROL">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user152_dbModelContainer" CdmEntityContainer="user152_dbEntities1">
+          <EntitySetMapping Name="CLIENTS">
+            <EntityTypeMapping TypeName="user152_dbModel.CLIENTS">
+              <MappingFragment StoreEntitySet="CLIENTS">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="user152_dbModel.EMPLOYEES">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="qualification" ColumnName="qualification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POST">
+            <EntityTypeMapping TypeName="user152_dbModel.POST">
+              <MappingFragment StoreEntitySet="POST">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post1" ColumnName="post" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QUALIFICATION">
+            <EntityTypeMapping TypeName="user152_dbModel.QUALIFICATION">
+              <MappingFragment StoreEntitySet="QUALIFICATION">
+                <ScalarProperty Name="qualification_id" ColumnName="qualification_id" />
+                <ScalarProperty Name="qualification1" ColumnName="qualification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGISTRATION">
+            <EntityTypeMapping TypeName="user152_dbModel.REGISTRATION">
+              <MappingFragment StoreEntitySet="REGISTRATION">
+                <ScalarProperty Name="registration_id" ColumnName="registration_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="services_id" ColumnName="services_id" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL">
+            <EntityTypeMapping TypeName="user152_dbModel.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SERVICES">
+            <EntityTypeMapping TypeName="user152_dbModel.SERVICES">
+              <MappingFragment StoreEntitySet="SERVICES">
+                <ScalarProperty Name="services_id" ColumnName="services_id" />
+                <ScalarProperty Name="services_name" ColumnName="services_name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATUS">
+            <EntityTypeMapping TypeName="user152_dbModel.STATUS">
+              <MappingFragment StoreEntitySet="STATUS">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
+                <ScalarProperty Name="color" ColumnName="color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="user152_dbModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

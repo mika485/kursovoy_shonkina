@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3cfd384ed2144560abab8ff7ef0b84c4" Name="Diagram1">
+        <EntityTypeShape EntityType="user152_dbModel.CLIENTS" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.EMPLOYEES" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.POST" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.QUALIFICATION" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.REGISTRATION" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.ROL" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.SERVICES" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.STATUS" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="user152_dbModel.USERS" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="user152_dbModel.FK_REGISTRATION_CLIENTS" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_EMPLOYEES_POST" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_EMPLOYEES_QUALIFICATION" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_REGISTRATION_EMPLOYEES" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_REGISTRATION_SERVICES" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_REGISTRATION_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="user152_dbModel.FK_USERS_ROL" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
